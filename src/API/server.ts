@@ -10,7 +10,8 @@ createServer({
         server.create("todo", { id: uuid(), text: "Make bread", done: true });
     },
     routes(){
-        this.get("todos/", (schema) => {
+        this.namespace = "todos";
+        this.get("/", (schema) => {
             return schema.db.todos;
           });
     }
