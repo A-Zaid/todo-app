@@ -10,9 +10,13 @@ import ToDoItem from "../Models/todoitem";
 
 interface Props {
     toDoItems : ToDoItem[];
+    updateStatusItem : (id : string) => void;
+    deleteToDoItem : (id:string) => void;
 }
 
-function ToDoList({toDoItems} : Props) {
+
+function ToDoList({toDoItems, updateStatusItem, deleteToDoItem} : Props) {
+
   return (
     <ListGroup as="ol" numbered>
       {toDoItems &&
@@ -34,10 +38,10 @@ function ToDoList({toDoItems} : Props) {
               </div>
 
               <ButtonGroup className="mb-2">
-                <Button variant="primary">
+                <Button variant="primary" onClick={() => updateStatusItem(toDoItem.id)}>
                   {toDoItem.done ? "Not Done" : "Done"}
                 </Button>
-                <Button variant="danger">Delete</Button>
+                <Button variant="danger" onClick={() => deleteToDoItem(toDoItem.id)}>Delete</Button>
               </ButtonGroup>
             </ListGroup.Item>
           ))}
