@@ -17,7 +17,27 @@ function App() {
       .then((data) => setTodoItems(data))
       .catch((error) => console.log("Error fetching todos", error));
   }
-  
+
+  function addToDoItem(newToDoItem: ToDoItem) {
+    fetch("/todos", {
+      method: "POST",
+      body: JSON.stringify({
+        id: newToDoItem.id,
+        text: newToDoItem.text,
+        done: newToDoItem.done,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        const todo: ToDoItem = result;
+        toDoItems ? setTodoItems([...toDoItems, todo]) : setTodoItems([todo]);
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log("Error adding todo item.", error);
+      });
+  }
+
   function updateStatusItem(id: string) {
     if (toDoItems) {
       let item = toDoItems.find((x) => x.id === id);
@@ -61,6 +81,7 @@ function App() {
           <Col md={8}>
             <ToDoList
               toDoItems={toDoItems}
+              addToDoItem={addToDoItem}
               updateStatusItem={updateStatusItem}
               deleteToDoItem={deleteToDoItem}
             />

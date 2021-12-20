@@ -14,6 +14,10 @@ createServer({
     this.get("/", (schema) => {
       return schema.db.todos;
     });
+    this.post("/", (schema, request) => {
+        let attrs = JSON.parse(request.requestBody);
+        return schema.db.todos.insert(attrs);
+      });
     this.put("/:id", (schema, request) => {
       let newAttrs = JSON.parse(request.requestBody);
       return schema.db.todos.update(request.params.id, newAttrs);
