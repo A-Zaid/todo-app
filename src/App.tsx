@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import ToDoList from "./Components/ToDoList";
+import ToDoSearch from "./Components/ToDoSearch";
 import ToDoItem from "./Models/todoitem";
 
 function App() {
-  const [toDoItems, setTodoItems] = useState<ToDoItem[]>([]);
+  const [toDoItems, setTodoItems] = useState<ToDoItem[] | undefined>([]);
 
   useEffect(() => {
     loadTodos();
@@ -74,8 +75,21 @@ function App() {
       });
   }
 
+  function searchToDos(text: string, status: boolean) {
+    console.log(`text '${text}' status ${status}`)
+    if (toDoItems) {
+      if (text === "" && !status )
+      loadTodos();
+      else {
+        let itemsSearched : ToDoItem[] = toDoItems.filter((x) => x.text.toLowerCase().includes(text.toLowerCase()) && x.done === status);
+        setTodoItems(itemsSearched);
+      }
+    }
+  }
+
   return (
     <>
+    <ToDoSearch searchToDos={searchToDos} loadToDos={loadTodos} />
       <Container style={{ marginTop: "7em" }}>
         <Row className="justify-content-center">
           <Col md={8}>

@@ -12,7 +12,7 @@ import ToDoItem from "../Models/todoitem";
 import {v4 as uuid} from "uuid";
 
 interface Props {
-  toDoItems: ToDoItem[];
+  toDoItems: ToDoItem[] | undefined;
   addToDoItem: (newToDoItem: ToDoItem) => void;
   updateStatusItem: (id: string) => void;
   deleteToDoItem: (id: string) => void;
